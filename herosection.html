@@ -168,8 +168,8 @@
       <a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300"
         href="#">Insights</a>
     </div>
-    <div class="flex items-center">
-      <a href="signin.html"
+    <div class="flex items-center" id="auth-nav">
+      <a href="signin.html" id="auth-btn"
         class="bg-primary text-on-primary px-6 py-2 text-label-sm font-label-sm uppercase tracking-widest transition-all Active:opacity-80 Active:scale-95 glow-hover inline-block no-underline">
         Sign In
       </a>
@@ -394,6 +394,20 @@
     });
 
     animate();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script>
+    (async () => {
+      try {
+        const { data: { session } } = await _supabase.auth.getSession();
+        if (session) {
+          const btn = document.getElementById('auth-btn');
+          btn.href = 'dashboard.html';
+          btn.textContent = 'Dashboard';
+        }
+      } catch (e) { /* ignore - just show sign in */ }
+    })();
   </script>
 </body>
 
