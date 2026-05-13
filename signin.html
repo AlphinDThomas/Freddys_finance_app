@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freddy | Sign In</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;700&family=JetBrains+Mono:wght@500&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'Geist';
+      src: url('https://cdn.jsdelivr.net/gh/vercel/geist-font@v1.0.0/fonts/geist-sans/Geist-Thin.woff2') format('woff2');
+      font-weight: 200;
+    }
+
+    @font-face {
+      font-family: 'Geist';
+      src: url('https://cdn.jsdelivr.net/gh/vercel/geist-font@v1.0.0/fonts/geist-sans/Geist-Light.woff2') format('woff2');
+      font-weight: 300;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0a0a;
+      color: #e2e2e2;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ── Ambient background glow ─────────────────────────────── */
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-glow::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+      animation: drift 20s ease-in-out infinite alternate;
+    }
+
+    .bg-glow::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
+      animation: drift 25s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(40px, -30px) scale(1.1); }
+    }
+
+    /* ── Back link ───────────────────────────────────────────── */
+    .back-link {
+      position: fixed;
+      top: 2rem;
+      left: 2.5rem;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+
+    .back-link .material-symbols-outlined {
+      font-size: 18px;
+      font-variation-settings: 'FILL' 0, 'wght' 300;
+      transition: transform 0.3s;
+    }
+
+    .back-link:hover .material-symbols-outlined {
+      transform: translateX(-3px);
+    }
+
+    /* ── Card ────────────────────────────────────────────────── */
+    .signin-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 420px;
+      padding: 3rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      opacity: 0;
+      transform: translateY(24px);
+      animation: cardIn 0.8s ease 0.2s forwards;
+    }
+
+    @keyframes cardIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── Logo ────────────────────────────────────────────────── */
+    .logo {
+      font-family: 'Geist', 'Inter', sans-serif;
+      font-weight: 200;
+      font-size: 28px;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.35);
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Form ────────────────────────────────────────────────── */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 0.625rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e2e2e2;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-input::placeholder {
+      color: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-input:focus {
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.03);
+    }
+
+    .form-input.error {
+      border-color: rgba(255, 100, 100, 0.5);
+      box-shadow: 0 0 0 3px rgba(255, 100, 100, 0.05);
+    }
+
+    /* ── Password wrapper ────────────────────────────────────── */
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper .form-input {
+      padding-right: 3rem;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      transition: color 0.3s;
+    }
+
+    .password-toggle:hover {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .password-toggle .material-symbols-outlined {
+      font-size: 20px;
+      font-variation-settings: 'FILL' 0, 'wght' 300;
+    }
+
+    /* ── Submit ───────────────────────────────────────────────── */
+    .submit-btn {
+      width: 100%;
+      padding: 0.9375rem 1rem;
+      margin-top: 0.5rem;
+      background: #ffffff;
+      color: #0a0a0a;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: box-shadow 0.3s, opacity 0.3s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:hover {
+      box-shadow: 0 0 24px rgba(255, 255, 255, 0.25);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .submit-btn .btn-text {
+      transition: opacity 0.2s;
+    }
+
+    .submit-btn .btn-loader {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .submit-btn.loading .btn-text {
+      opacity: 0;
+    }
+
+    .submit-btn.loading .btn-loader {
+      opacity: 1;
+    }
+
+    /* ── Spinner ──────────────────────────────────────────────── */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(10, 10, 10, 0.15);
+      border-top-color: #0a0a0a;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── Error toast ──────────────────────────────────────────── */
+    .error-toast {
+      margin-top: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: rgba(255, 80, 80, 0.06);
+      border: 1px solid rgba(255, 80, 80, 0.15);
+      color: rgba(255, 140, 140, 0.9);
+      font-size: 13px;
+      font-weight: 400;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      transform: translateY(-6px);
+      animation: toastIn 0.35s ease forwards;
+    }
+
+    .error-toast.visible {
+      display: flex;
+    }
+
+    .error-toast .material-symbols-outlined {
+      font-size: 18px;
+      font-variation-settings: 'FILL' 0, 'wght' 400;
+      color: rgba(255, 100, 100, 0.7);
+    }
+
+    @keyframes toastIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── Divider ──────────────────────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* ── Footer text ─────────────────────────────────────────── */
+    .card-footer {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .card-footer a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .card-footer a:hover {
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bg-glow"></div>
+
+  <a class="back-link" href="herosection.html">
+    <span class="material-symbols-outlined">arrow_back</span>
+    Back
+  </a>
+
+  <div class="signin-card">
+    <div class="logo">Freddy</div>
+    <p class="card-subtitle">Sign in to your financial control center</p>
+
+    <form id="signin-form" autocomplete="off">
+      <div class="form-group">
+        <label class="form-label" for="username">Username</label>
+        <input
+          class="form-input"
+          id="username"
+          type="text"
+          placeholder="Enter your username"
+          autocomplete="username"
+          spellcheck="false"
+          required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <div class="password-wrapper">
+          <input
+            class="form-input"
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required />
+          <button type="button" class="password-toggle" id="toggle-password" aria-label="Toggle password visibility">
+            <span class="material-symbols-outlined">visibility_off</span>
+          </button>
+        </div>
+      </div>
+
+      <button class="submit-btn" type="submit" id="submit-btn">
+        <span class="btn-text">Sign In</span>
+        <span class="btn-loader"><span class="spinner"></span></span>
+      </button>
+
+      <div class="error-toast" id="error-toast">
+        <span class="material-symbols-outlined">error</span>
+        <span id="error-message">Invalid username or password</span>
+      </div>
+    </form>
+
+    <div class="divider">or</div>
+
+    <p class="card-footer">
+      Don't have an account? <a href="#">Get Started</a>
+    </p>
+  </div>
+
+  <script>
+    // ── Hardcoded credentials ──────────────────────────────────
+    const VALID_USERNAME = 'freddy';
+    const VALID_PASSWORD = 'freddy';
+
+    // ── DOM refs ───────────────────────────────────────────────
+    const form = document.getElementById('signin-form');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const submitBtn = document.getElementById('submit-btn');
+    const errorToast = document.getElementById('error-toast');
+    const errorMessage = document.getElementById('error-message');
+    const togglePassword = document.getElementById('toggle-password');
+
+    // ── Password visibility toggle ─────────────────────────────
+    togglePassword.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      togglePassword.querySelector('.material-symbols-outlined').textContent =
+        isPassword ? 'visibility' : 'visibility_off';
+    });
+
+    // ── Clear error on input ───────────────────────────────────
+    [usernameInput, passwordInput].forEach(input => {
+      input.addEventListener('input', () => {
+        input.classList.remove('error');
+        errorToast.classList.remove('visible');
+      });
+    });
+
+    // ── Form submit ────────────────────────────────────────────
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const username = usernameInput.value.trim().toLowerCase();
+      const password = passwordInput.value;
+
+      // Reset error states
+      usernameInput.classList.remove('error');
+      passwordInput.classList.remove('error');
+      errorToast.classList.remove('visible');
+
+      // Validate empty fields
+      if (!username || !password) {
+        if (!username) usernameInput.classList.add('error');
+        if (!password) passwordInput.classList.add('error');
+        showError('Please fill in all fields');
+        return;
+      }
+
+      // Show loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      // Simulate network delay for polish
+      await new Promise(resolve => setTimeout(resolve, 1200));
+
+      // Authenticate
+      if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+        // Store auth session
+        sessionStorage.setItem('freddy_authenticated', 'true');
+        sessionStorage.setItem('freddy_user', username);
+
+        // Redirect to welcome dashboard
+        window.location.href = 'herosection.html';
+      } else {
+        // Auth failed
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        usernameInput.classList.add('error');
+        passwordInput.classList.add('error');
+
+        if (username !== VALID_USERNAME && password !== VALID_PASSWORD) {
+          showError('Invalid username and password');
+        } else if (username !== VALID_USERNAME) {
+          showError('Invalid username');
+        } else {
+          showError('Invalid password');
+        }
+
+        // Subtle shake on the card
+        const card = document.querySelector('.signin-card');
+        card.style.animation = 'none';
+        card.offsetHeight; // trigger reflow
+        card.style.animation = 'shake 0.4s ease';
+      }
+    });
+
+    function showError(msg) {
+      errorMessage.textContent = msg;
+      errorToast.classList.add('visible');
+    }
+
+    // ── Shake animation (added dynamically) ────────────────────
+    const shakeStyle = document.createElement('style');
+    shakeStyle.textContent = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-8px); }
+        40% { transform: translateX(6px); }
+        60% { transform: translateX(-4px); }
+        80% { transform: translateX(2px); }
+      }
+    `;
+    document.head.appendChild(shakeStyle);
+
+    // ── Auto-focus username ────────────────────────────────────
+    window.addEventListener('load', () => {
+      setTimeout(() => usernameInput.focus(), 800);
+    });
+  </script>
+</body>
+
+</html>
