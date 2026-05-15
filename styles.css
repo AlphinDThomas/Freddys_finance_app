@@ -5,12 +5,12 @@
 /* ── Font Faces ─────────────────────────────────────────────── */
 @font-face {
   font-family: 'Geist';
-  src: url('https://cdn.jsdelivr.net/gh/vercel/geist-font@v1.0.0/fonts/geist-sans/Geist-Thin.woff2') format('woff2');
+  src: url('https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-200-normal.woff2') format('woff2');
   font-weight: 200;
 }
 @font-face {
   font-family: 'Geist';
-  src: url('https://cdn.jsdelivr.net/gh/vercel/geist-font@v1.0.0/fonts/geist-sans/Geist-Light.woff2') format('woff2');
+  src: url('https://cdn.jsdelivr.net/fontsource/fonts/geist-sans@latest/latin-300-normal.woff2') format('woff2');
   font-weight: 300;
 }
 

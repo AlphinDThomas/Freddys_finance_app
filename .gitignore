@@ -5,7 +5,6 @@ node_modules/
 .env
 .env.local
 .env.production
-supabase-client.js
 
 # OS files
 .DS_Store
