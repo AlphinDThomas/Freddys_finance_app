@@ -302,7 +302,7 @@ async function checkAuth() {
 
 async function signOut() {
   await _supabase.auth.signOut();
-  window.location.href = 'herosection.html';
+  window.location.href = 'index.html';
 }
 
 // ── Shared UI builders (unchanged) ───────────────────────────
